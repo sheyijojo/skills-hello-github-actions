@@ -9,7 +9,7 @@ on:
   pull_request:
     branches: [ "main" ]
 
-jobs:
+jobs: ##Separating the build and test steps makes it easier to understand the log
   build:
 
     runs-on: ubuntu-latest
@@ -28,4 +28,5 @@ jobs:
         cache: 'npm'
     - run: npm ci
     - run: npm run build --if-present
-    - run: npm test
+    - run: npm test  ## move the test step to a dedicated test job. This will make the log easier to understand
+                      ## see documentation 

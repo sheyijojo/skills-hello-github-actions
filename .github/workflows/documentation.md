@@ -1,0 +1,101 @@
+# GitHub Actions Workflow Example
+
+This workflow example demonstrates how to organize your CI/CD pipeline by separating build and test jobs. Each job has a specific responsibility:
+
+## Build Job
+- Compiles source code
+- Creates build artifacts
+- Prepares resources for testing
+
+## Test Job
+- Runs after build completion
+- Executes test suites
+- Validates code quality
+
+This separation enables:
+- Improved debugging
+- Better resource utilization
+- Clear workflow visualization
+
+
+
+```yaml
+test:
+  runs-on: ${{ matrix.os }}
+  strategy:
+    matrix:
+      os: [ubuntu-latest, windows-latest]
+      node-version: [16.x, 18.x]
+  steps:
+  - uses: actions/checkout@v3
+  - name: Use Node.js ${{ matrix.node-version }}
+    uses: actions/setup-node@v3
+    with:
+      node-version: ${{ matrix.node-version }}
+  - name: npm install, and test
+    run: |
+      npm install
+      npm test
+    env:
+      CI: true
+
+
+```
+
+## Artifact Storage 
+
+```yml
+build:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+      - name: npm install and build webpack
+        run: |
+          npm install
+          npm run build
+      - uses: actions/upload-artifact@main
+        with:
+          name: webpack artifacts
+          path: public/
+
+Here, we specify public/ to upload everything to a directory.:
+If we just wanted to upload a single file, we use something like public/mytext.txt:
+  
+To download the artifact for testing, the build must complete successfully and uploaded the artifact: 
+
+In the following code, we specify that the test job depends on the build job:    
+
+
+test:
+    needs: build
+    runs-on: ubuntu-latest
+
+
+    steps:
+        - uses: actions/checkout@v3
+        - uses: actions/download-artifact@main
+          with:
+             name: webpack artifacts
+             path: public
+```
+
+
+```yml
+Automate reviews in GitHub using workflows
+So far, we described starting the workflow with GitHub events such as push or pull-request. We could also run a workflow on a schedule, or on some event outside of GitHub.
+
+Sometimes, we want to run the workflow only after a person performs an action. For example, we might only want to run a workflow after a reviewer approves the pull request. For this scenario, we can trigger on pull-request-review.
+
+Another action we could take is to add a label to the pull request. In this case, we use the pullreminders/label-when-approved-action action.
+
+```
+```yml
+steps:
+     - name: Label when approved
+       uses: pullreminders/label-when-approved-action@main
+       env:
+         APPROVALS: "1"
+         GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+         ADD_LABEL: "approved"
+
+```
