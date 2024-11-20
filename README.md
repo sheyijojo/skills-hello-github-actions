@@ -18,7 +18,7 @@ Each step consists of either a shell script that's executed, or a reference to a
 
 Update your workflow to make it post a comment on new pull requests. It will do this using a [bash](https://en.wikipedia.org/wiki/Bash_%28Unix_shell%29) script and [GitHub CLI](https://cli.github.com/).
 
-### :keyboard: Activity: Add a step to your workflow file
+### :keyboard: Activity: Add a step to your workflow file.
 
 1. Still working on the `welcome-workflow` branch, open your `welcome.yml` file.
 1. Update the contents of the file to:
