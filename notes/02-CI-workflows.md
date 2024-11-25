@@ -153,3 +153,12 @@ jobs:
 
 
 > job_2 requires job_1 to complete by using the needs: job_1 syntax, then uses the actions/download-artifact@v2 action to download that artifact and then print the contents of file.txt.
+
+
+## Access the workflow logs from the REST API
+>In addition to viewing logs using GitHub, you can also use GitHub's REST API to view logs for workflow runs, re-run workflows, or even cancel workflow runs. 
+
+
+>To view a workflow run's log using the API, you need to send a GET request to the logs endpoint. Keep in mind that anyone with read access to the repository can use this endpoint. If the repository is private, you must use an access token with the repo scope.
+
+>For example, a GET request to view a specific workflow run log would follow this path:
