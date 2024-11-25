@@ -162,3 +162,8 @@ jobs:
 >To view a workflow run's log using the API, you need to send a GET request to the logs endpoint. Keep in mind that anyone with read access to the repository can use this endpoint. If the repository is private, you must use an access token with the repo scope.
 
 >For example, a GET request to view a specific workflow run log would follow this path:
+
+
+```bash
+GET /repos/{owner}/{repo}/actions/runs/{run_id}/logs
+```
